@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <title>排行榜</title>
+  <link rel="stylesheet" href="css/normalize.min.css" />
+  <link rel="stylesheet" href="css/rank.css" />
+</head>
+
+<body>
+  <div id="app">
+    <div class="showbox" v-if="showLoading">
+      <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+      </div>
+    </div>
+    <section id="ranking" style="opacity: 0" :style="{opacity: appOpacity}">
+      <span id="ranking_title">我的排行：{{myIndex + 1}}</span>
+      <section id="ranking_caption">
+        <section class="box">
+          <section class="col_1">排名</section>
+          <section class="col_2"></section>
+          <section class="col_3">昵称</section>
+          <section class="col_4">扫码人数</section>
+        </section>
+      </section>
+      <section id="ranking_list">
+        <section class="box cur" v-if="myIndex != -1 && myIndex + 1 >= visibleCount">
+          <section class="col_1">{{myIndex+1}}</section>
+          <section class="col_2"><img :src="logs[myIndex].headimgurl" /></section>
+          <section class="col_3">{{logs[myIndex].nickname}}</section>
+          <section class="col_4">{{logs[myIndex].scan_times}}</section>
+        </section>
+        <section class="box" v-for="(log,index) in logs" :class="{cur: log.openid == openid}">
+          <section class="col_1" :title="index+1">{{index+1}}</section>
+          <section class="col_2"><img :src="log.headimgurl" /></section>
+          <section class="col_3">{{log.nickname}}</section>
+          <section class="col_4">{{log.scan_times}}</section>
+        </section>
+      </section>
+      <a id="play_game" href="javascript:" title="关闭" @click="closeWin">关闭</a>
+      <div id="log" style="margin-top: 30px"></div>
+    </section>
+    <div class="alert" v-if="alertStr">
+      <div class="mask"></div>
+      <div class="content">
+        <div class="close" @click="alertStr = ''">&times;</div>
+        <span v-html="alertStr"></span>
+      </div>
+    </div>
+    <div class="alert" v-if="isWx" style="z-index: 1001">
+      <div class="mask"></div>
+      <div class="content" style="line-height: initial;height: auto;padding: 15px;">
+        <span>如果页面没有显示内容，<br>请复制链接到浏览器中打开</span>
+      </div>
+    </div>
+  </div>
+<!-- <a id="return_back" href="#" title="返回">返回</a> -->
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+<script>
+// 使用闭包，避免变量名和微信打开网页定义的发生冲突
+(function(window, undefined) {
+  // 获取范围随机数
+  const getRand = (min, max) => min + Math.round((max - min) * Math.random())
+
+  const getArr = size => {
+    let arr = []
+    for(let i = 0; i < size; i++) {
+      arr.push(i + 1)
+    }
+    return arr
+  }
+
+  // 微信打开网页，不能引入外部js
+  const logs = getArr(20).map(qr_id => {
+    let scan_times = getRand(0,100)
+    return {
+      qr_id,
+      headimgurl: 'imgs/pic.jpg',
+      nickname: `林黛玉${qr_id}`,
+      scan_times,
+      freshman_scan_times: getRand(0, scan_times),
+      create_date: "2019/01/15 14:15:03",
+      create_time: "1547532903",
+      openid: `openid${qr_id}`,
+    }
+  }).sort((log1, log2) => log2.scan_times - log1.scan_times)
+
+  const parseUrlParams = (str) => {
+    if(str == undefined) return {}
+    str = str.substr(1)
+    let arr = str.split("&"), obj = {}, newArr = []
+    arr.map((value,index,arr) => {
+      newArr = value.split("=")
+      if(newArr[0] != undefined && newArr[0] != '') {
+        obj[newArr[0]] = newArr[1]
+      }
+    })
+    return obj
+  }
+
+  const ORIGIN = location.protocol + '//applet.starfoods.com.cn'
+
+  let IS_OFFLINE = location.origin !== ORIGIN
+
+  // 微信打开网页，logs已定义
+  const _debug = (m = '') => {
+    document.getElementById('log').innerHTML = m
+  }
+
+  const ajax = (url = '', data = {}, method = 'get') => {
+    if (IS_OFFLINE) {
+      console.log('离线模式')
+      return Promise.reject('离线模式')
+    }
+    let headers = {}
+    let params = parseUrlParams(location.search) || {}
+    let body = undefined
+    if (method.toLowerCase() == 'post') {
+      headers['Content-Type'] = 'application/json'
+      body = JSON.stringify(data)
+    } else {
+      // 微信打开网页，不能使用扩展运算符 ...
+      for(let attr in data) params[attr] = data[attr]
+    }
+    url = `${ORIGIN}/index.php/${url}`
+    let paramsArray = []
+    //拼接参数
+    Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
+    if (url.search(/\?/) === -1) {
+      url += '?' + paramsArray.join('&')
+    } else {
+      url += '&' + paramsArray.join('&')
+    }
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url,
+        data: data,
+        dataType: 'json',
+        success(res) {
+          if (res && res.hasOwnProperty('no') && res.no == 1) {
+            resolve(res)
+          } else {
+            reject('服务器繁忙')
+          }
+        },
+        error() {
+          reject('服务器繁忙')
+        }
+      })
+    })
+  }
+
+  let params = parseUrlParams(location.search) || {}
+  let openid = params.openid || ''
+  let cannotCloseAlert = null
+
+  const app = new Vue({
+    el: '#app',
+    data() {
+      return {
+        isWx: false,
+        IS_OFFLINE,
+        logs,
+        myIndex: -1,
+        openid,
+        alertStr: '',
+        alertTimeout: null,
+        appOpacity: 0,
+        showTop: false,
+        showLoading: true,
+        visibleCount: 7
+      }
+    },
+    created() {
+      const finished = () => {
+        this.filterLogs()
+        this.$nextTick(() => {
+          this.showLoading = false
+          this.appOpacity = 1
+        })
+      }
+      this.showLoading = true
+      ajax('Official/Index/qr_activity_users')
+        .then(res => {
+          this.logs = res.msg.list || []
+          finished()
+        })
+        .catch(err => {
+          this.alertMsg(err)
+          // 手机不支持finally
+          finished()
+        })
+    },
+    mounted() {
+      this.visibleCount = Math.floor(document.getElementById('ranking_list').offsetHeight / 50) - 1
+    },
+    methods: {
+      filterLogs() {
+        this.myIndex = -1
+        for(let i = 0; i < this.logs.length; i++) {
+          if (this.logs[i].openid == this.openid) {
+            this.myIndex = i
+            break
+          }
+        }
+      },
+      // 解决多个弹窗的问题
+      alertMsg(err, forceAlert = false) {
+        clearInterval(this.alertTimeout)
+        if(!this.IS_OFFLINE || forceAlert) this.alertTimeout = setTimeout(() => this.alertStr = err)
+      },
+      // 关闭窗口
+      closeWin() {
+        clearTimeout(cannotCloseAlert)
+        cannotCloseAlert = setTimeout(() => {
+          alert('请点击返回键关闭本页面')
+        }, 1000)
+        if (window.WeixinJSBridge) {
+          window.WeixinJSBridge.call('closeWindow')
+        } else if (window.close) {
+          window.close()
+          window.history.back()
+        }
+      }
+    }
+  })
+
+  if(!window.app) window.app = app
+})(window)
+</script>
+</html>
