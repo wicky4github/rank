@@ -7,8 +7,54 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
   <title>排行榜</title>
-  <link rel="stylesheet" href="css/normalize.min.css" />
-  <link rel="stylesheet" href="css/rank.css" />
+  <link rel="stylesheet" href="./css/rank.css">
+  <style>
+    /*----样式初始化----------------------*/
+    html { height: 100%; }
+    body { font-size:62.5%; background:#fff/*#F8F7F7*/;  	-webkit-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important; /*解决Iphone下橱窗字体变大问题*/}
+    * { padding: 0; margin: 0; border: 0; font-style: normal;-webkit-tap-highlight-color: rgba(0,0,0,0);	/*禁止链接高亮*/ -webkit-touch-callout: none;/*禁止链接长按弹出选项菜单*/ }
+    nav, footer, section, header, article { display: block; }
+    ul { list-style: none; }
+    a:link { -webkit-tap-highlight-color: rgba(0,0,0,0);/*禁止链接高亮*/ -webkit-touch-callout: none;	/*禁止链接长按弹出选项菜单*/ }
+    a:link, a:visited, a:hover, a:active {text-decoration:none; }
+    input, textarea { -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; box-shadow: none;}
+    img { display: block;border:none; }
+    textarea {-webkit-appearance:none; /*去除input默认样式*/}
+    input {-webkit-appearance:none; /*去除input默认样式*/}
+    input[type="submit"],
+    input[type="reset"],
+    input[type="button"],
+    input{-webkit-appearance:none;}
+    input[type="date"]:before {content: attr(placeholder);color:#aaa;}
+    ::-webkit-input-placeholder {color:#aaa;font-size:0.7rem;font-weight: 200}
+    .ph_nav{position: fixed;top: 0;left: 0;background: #fff;z-index: 100;width: 100%;padding: 0 10%;box-shadow: 1px 1px 10px rgba(0,0,0,0.1);}
+    .ph_nav ul{width: 100%;margin: 0 auto;overflow: hidden;}
+    .ph_nav ul li{float: left;font-size: 16px;color: #000;font-weight: 500;line-height: 55px;}
+    .ph_nav ul li:nth-child(1){width: 22%;}
+    .ph_nav ul li:nth-child(2){width: 53%;}
+    .ph_nav ul li:nth-child(3){width: 25%;text-align: right}
+    .ph_body{width:100%;margin: 0 auto;}
+    .ph_body ul{width:100%;margin: 0 auto;}
+    .ph_body ul li{width:100%;margin: 0 auto;position: relative;padding: 5% 10%;overflow: hidden;display: flex; align-items:center;background: #fff;}
+    .ph_body ul li:after{content:" ";position:absolute;left:10%;bottom:0;width:80%;height:1px;border-bottom:1px solid #eee;color:#fff;-webkit-transform-origin:0 100%;transform-origin:0 100%;-webkit-transform:scaleY(.5);transform:scaleY(.5)}
+    .ph_body ul li .ph_num{width:15%;float: left;}
+    .ph_body ul li .ph_num img{width:50%;display: block;font-size: 16px;color: #000;font-weight: 500;line-height: 20px;}
+    .ph_body ul li .ph_con{width:85%;float: left;overflow: hidden;display: flex; align-items:center;}
+    .ph_body ul li .ph_con .ph_tx{width:25%;float: left;}
+    .ph_body ul li .ph_con .ph_tx img{width:100%;margin: 0 auto;display: block;border-radius: 50%;}
+    .ph_body ul li .ph_con .ph_name{width:50%;float: left;padding-left: 5%;}
+    .ph_body ul li .ph_con .ph_name h2{width:100%;margin: 0 auto;font-size: 16px;color: #000;font-weight: 500;line-height: 20px;}
+    .ph_body ul li .ph_con .ph_score{width:20%;float: left;line-height: 20px;text-align: right;}
+    .ph_body ul li .ph_con .ph_score span{font-size: 20px;color: #f30;font-weight: 500;line-height: 24px;}
+    .ph_body ul li:first-child{background: #eee;}
+    .ph_close{position: fixed;bottom: 0;left: 0;z-index: 100;width: 100%;background: #3c9e20;}
+    .ph_close a{width: 100%;margin: 0 auto;display: block;text-align: center;font-size: 18px;color: #fff;font-weight: 400;line-height: 55px;}
+
+    .reward-tip {padding:10px;background:#aaa;color:#fff;white-space: nowrap;position: relative}
+    .reward-tip span {position: relative;top: 0;left: 0}
+  </style>
 </head>
 
 <body>
@@ -20,33 +66,45 @@
         </svg>
       </div>
     </div>
-    <section id="ranking" style="opacity: 0" :style="{opacity: appOpacity}">
-      <span id="ranking_title">我的排行：{{myIndex + 1}}</span>
-      <section id="ranking_caption">
-        <section class="box">
-          <section class="col_1">排名</section>
-          <section class="col_2"></section>
-          <section class="col_3">昵称</section>
-          <section class="col_4">助力人数</section>
-        </section>
-      </section>
-      <section id="ranking_list">
-        <section class="box cur" v-if="myIndex != -1 && myIndex + 1 >= visibleCount">
-          <section class="col_1">{{myIndex+1}}</section>
-          <section class="col_2"><img :src="logs[myIndex].headimgurl" /></section>
-          <section class="col_3">{{logs[myIndex].nickname}}</section>
-          <section class="col_4">{{logs[myIndex].scan_times}}</section>
-        </section>
-        <section class="box" v-for="(log,index) in logs" :class="{cur: log.openid == openid}">
-          <section class="col_1" :title="index+1">{{index+1}}</section>
-          <section class="col_2"><img :src="log.headimgurl" /></section>
-          <section class="col_3">{{log.nickname}}</section>
-          <section class="col_4">{{log.scan_times}}</section>
-        </section>
-      </section>
-      <a id="play_game" href="javascript:" title="关闭" @click="closeWin">关闭</a>
+    <div class="ph_nav" :style="{opacity: appOpacity}">
+      <ul>
+        <li>排名</li>
+        <li>昵称</li>
+        <li>助力值</li>
+      </ul>
+    </div>
+    <div style="height: 55px"></div>
+    <div class="reward-tip" v-if="reward_tip" ref="reward_tip_div">
+      <span v-html="reward_tip" ref="reward_tip_span" :style="reward_tip_position"></span>
+    </div>
+    <div id="ranking_ph" class="ph_body" style="opacity: 0" :style="{opacity: appOpacity}">
+      <ul >
+        <li v-if="myIndex != -1 && myIndex + 1 >= visibleCount">
+          <div class="ph_num">{{myIndex+1}}</div>
+          <div class="ph_con">
+            <div class="ph_tx"><img :src="logs[myIndex].headimgurl" /></div>
+            <div class="ph_name"><h2>{{logs[myIndex].nickname}}</h2></div>
+            <div class="ph_score"><span>{{logs[myIndex].scan_times}}</span></div>
+          </div>
+        </li>
+        <li v-for="(log,index) in logs" :class="{cur: log.openid == openid}">
+          <div class="ph_num" :title="index+1">
+            <img v-if="index < 3" :src="`imgs/rr${index+1}.png`"/>
+            <span v-else>{{index+1}}</span>
+          </div>
+          <div class="ph_con">
+            <div class="ph_tx"><img :src="log.headimgurl" /></div>
+            <div class="ph_name"><h2>{{log.nickname}}</h2></div>
+            <div class="ph_score"><span>{{log.scan_times}}</span></div>
+          </div>
+        </li>
+      </ul>
+      <div style="height: 55px;"></div>
+      <div class="ph_close">
+        <a href="javascript:" title="关闭" @click="closeWin">关闭</a>
+      </div>
       <div id="log" style="margin-top: 30px"></div>
-    </section>
+    </div>
     <div class="alert" v-if="alertStr">
       <div class="mask"></div>
       <div class="content">
@@ -177,7 +235,37 @@
         appOpacity: 0,
         showTop: false,
         showLoading: true,
-        visibleCount: 7
+        visibleCount: 7,
+        reward_tip: '',
+        reward_scroll_interval: null,
+        reward_watch_timeout: null,
+        reward_tip_position: {left: 0}
+      }
+    },
+    watch: {
+      reward_tip(n) {
+        if(n) {
+          this.reward_tip_position = {left: 0}
+          // 移动span，向左滚动
+          clearTimeout(this.reward_watch_timeout)
+          this.reward_watch_timeout = setTimeout(() => {
+            clearInterval(this.reward_scroll_interval)
+            // +30像素是为了避免文字刚刚好就是div的长度，导致屏幕出现半个字的情况
+            if(this.$refs.reward_tip_div.offsetWidth <= this.$refs.reward_tip_span.offsetWidth + 30) {
+              this.reward_scroll_interval = setInterval(() => {
+                var movePx = 2
+                var updateLeft = parseInt(this.reward_tip_position.left.toString().replace('px', '')) - movePx
+                if(updateLeft <= -this.$refs.reward_tip_span.offsetWidth - 30) {
+                  // 超出边界
+                  updateLeft = this.$refs.reward_tip_div.offsetWidth
+                }
+                this.reward_tip_position = {
+                  left: `${updateLeft}px`
+                }
+              }, 50)
+            }
+          }, 1500)
+        }
       }
     },
     created() {
@@ -192,6 +280,13 @@
       ajax('Official/Index/qr_activity_users')
         .then(res => {
           this.logs = res.msg.list || []
+          try {
+            var activity = res.msg.activity || {};
+            document.title = `${activity.activity_name}排行榜`
+            this.reward_tip = activity.reward_tip || ''
+          } catch (e) {
+            document.title = '排行榜'
+          }
           finished()
         })
         .catch(err => {
@@ -201,7 +296,10 @@
         })
     },
     mounted() {
-      this.visibleCount = Math.floor(document.getElementById('ranking_list').offsetHeight / 50) - 1
+      let liDom = document.getElementsByTagName('li')
+      let appH = this.$el.offsetHeight
+      let liH = (liDom && liDom.length) ?  liDom[0].offsetHeight : appH
+      this.visibleCount = Math.floor(appH / liH)
     },
     methods: {
       filterLogs() {
@@ -234,7 +332,7 @@
     }
   })
 
-  if(!window.app) window.app = app
+  if(!window.vueApp) window.vueApp = app
 })(window)
 </script>
 </html>
