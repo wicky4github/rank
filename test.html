@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta http-equiv="cache-control" content="no-transform"/>
+<meta content="telephone=no" name="format-detection">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<title>厦门集美湖豪生大酒店</title>
+<link href="css/ph.css" rel="stylesheet">
+<link href="css/demos.css" rel="stylesheet">
+<link href="fonts/iconfont.css" rel="stylesheet">
+<link href="WeUIcss/weui.min.css" rel="stylesheet">
+<link href="WeUIcss/jquery-weui.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="ph_nav">
+	<ul>
+		<li>排名</li>
+		<li>昵称</li>
+		<li>助力值</li>
+	</ul>
+</div>
+<div style="height: 55px"></div>
+<div class="ph_body">
+	<ul>
+		<li>
+			<div class="ph_num">20</div>
+			<a data-miniprogram-appid="wxeafeb99eaab6e158" data-miniprogram-path="/pages/user/scan_card_list?sn=kacc4tcuwkh74t7t45icliqy5xa796wn"> 领取优惠券</a>
+			<div class="ph_con">
+				<div class="ph_tx"><img src="images/wg1.jpg"/></div>
+				<div class="ph_name"><h2>昵称名字</h2></div>
+				<div class="ph_score"><span>335</span><i onClick="giftToggle()">兑换奖品</i></div>
+			</div>
+		</li>
+		<li>
+			<div class="ph_num"><img src="images/1.png"/></div>
+			<div class="ph_con">
+				<div class="ph_tx"><img src="images/wg2.jpg"/></div>
+				<div class="ph_name"><h2>昵称名字</h2></div>
+				<div class="ph_score"><span>335</span></div>
+			</div>
+		</li>
+		<li>
+			<div class="ph_num"><img src="images/2.png"/></div>
+			<div class="ph_con">
+				<div class="ph_tx"><img src="images/wg3.jpg"/></div>
+				<div class="ph_name"><h2>昵称名字</h2></div>
+				<div class="ph_score"><span>335</span></div>
+			</div>
+		</li>
+		<li>
+			<div class="ph_num"><img src="images/3.png"/></div>
+			<div class="ph_con">
+				<div class="ph_tx"><img src="images/wg4.jpg"/></div>
+				<div class="ph_name"><h2>昵称名字</h2></div>
+				<div class="ph_score"><span>335</span></div>
+			</div>
+		</li>
+		<li>
+			<div class="ph_num">4</div>
+			<div class="ph_con">
+				<div class="ph_tx"><img src="images/wg5.jpg"/></div>
+				<div class="ph_name"><h2>昵称名字</h2></div>
+				<div class="ph_score"><span>335</span></div>
+			</div>
+		</li>
+		<li>
+			<div class="ph_num">5</div>
+			<div class="ph_con">
+				<div class="ph_tx"><img src="images/wg6.jpg"/></div>
+				<div class="ph_name"><h2>昵称名字</h2></div>
+				<div class="ph_score"><span>335</span></div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div style="height: 55px;"></div>
+<div class="ph_close"><a href="">关 闭</a></div>
+	
+<!-- 个人信息填写 -->
+<div class="gift-cover">
+    <div class="gift-body">
+        <div class="gift-tit">兑换奖品</div>
+        <div class="gift-intro">
+
+			<div class="gift-intro-num">
+				<textarea id="textArea">R562188</textarea>
+				<input type="button" id="copyBtn" onclick="copyText()" value="一键复制"/>
+			</div>
+		</div>
+
+        <div class="gift-btn" onClick="giftToggle()">
+            <button>关闭</button>
+        </div>
+    </div>
+</div>
+<script>
+var copyText = function() {
+    var textArea = document.getElementById('textArea')
+    // 选中文本
+    textArea.select()
+    // 复制
+    document.execCommand('copy')
+}
+</script>
+<script>
+var g=1;
+function giftToggle(){
+	if(g==1){
+		$('.gift-cover').addClass('show')
+		g=0;
+	}else{
+		
+		$('.gift-cover').removeClass('show')
+		g=1;
+	}
+}
+</script>
+</body>
+</html>

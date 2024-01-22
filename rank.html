@@ -39,21 +39,52 @@
     .ph_body ul{width:100%;margin: 0 auto;}
     .ph_body ul li{width:100%;margin: 0 auto;position: relative;padding: 5% 10%;overflow: hidden;display: flex; align-items:center;background: #fff;}
     .ph_body ul li:after{content:" ";position:absolute;left:10%;bottom:0;width:80%;height:1px;border-bottom:1px solid #eee;color:#fff;-webkit-transform-origin:0 100%;transform-origin:0 100%;-webkit-transform:scaleY(.5);transform:scaleY(.5)}
-    .ph_body ul li .ph_num{width:15%;float: left;}
+    .ph_body ul li .ph_num{width:15%;}
     .ph_body ul li .ph_num img{width:50%;display: block;font-size: 16px;color: #000;font-weight: 500;line-height: 20px;}
-    .ph_body ul li .ph_con{width:85%;float: left;overflow: hidden;display: flex; align-items:center;}
-    .ph_body ul li .ph_con .ph_tx{width:25%;float: left;}
+    .ph_body ul li .ph_con{flex: 1;overflow: hidden;display: flex; align-items:center;}
+    .ph_body ul li .ph_con .ph_tx{width:20%;}
     .ph_body ul li .ph_con .ph_tx img{width:100%;margin: 0 auto;display: block;border-radius: 50%;}
-    .ph_body ul li .ph_con .ph_name{width:50%;float: left;padding-left: 5%;}
+    .ph_body ul li .ph_con .ph_name{flex: 1;padding-left: 5%;}
     .ph_body ul li .ph_con .ph_name h2{width:100%;margin: 0 auto;font-size: 16px;color: #000;font-weight: 500;line-height: 20px;}
-    .ph_body ul li .ph_con .ph_score{width:20%;float: left;line-height: 20px;text-align: right;}
+    .ph_body ul li .ph_con .ph_score{display: flex;align-items: center;justify-content: flex-end;}
     .ph_body ul li .ph_con .ph_score span{font-size: 20px;color: #f30;font-weight: 500;line-height: 24px;}
+    .ph_body ul li .ph_con .ph_score i{font-size: 12px;color: #fff;background: #ad2231;line-height: 18px;border-radius: 4px;padding: 4px 8px;margin-left: 10px;}
+
     .ph_body ul li:first-child{background: #eee;}
-    .ph_close{position: fixed;bottom: 0;left: 0;z-index: 100;width: 100%;background: #3c9e20;}
+    .ph_close{position: fixed;bottom: 0;left: 0;z-index: 100;width: 100%;background: #ad2231;}  /*绿色#3c9e20*/
     .ph_close a{width: 100%;margin: 0 auto;display: block;text-align: center;font-size: 18px;color: #fff;font-weight: 400;line-height: 55px;}
 
     .reward-tip {padding:10px;background:#aaa;color:#fff;white-space: nowrap;position: relative}
     .reward-tip span {position: relative;top: 0;left: 0}
+
+    /*填写姓名电话 弹窗*/
+    .per-intro-cover{position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1000;opacity: 1;outline: 0;text-align: center;width: 100%;height: 100%;background: rgba(0,0,0,0.8)}
+    .per-intro-body{width: 80%;position: fixed;left: 10%;top: 15%;background: #fff;z-index: 1001;border-radius: 8px;overflow: hidden;padding: 5% 0;}
+    .per-intro-tit{width:100%;margin:0 auto;position: relative;}
+    .per-intro-tit span{display: block;text-align: center;font-size:18px;color:#000;line-height: 50px;font-weight: 600;}
+    .per-intro-tit img{display: block;width: 18px;height: 18px;position: absolute;right: 10%;top: 50%;margin-top: -9px;z-index: 1;opacity: 0.5;}
+
+    .per-intro-ul{width: 80%;margin: 0 auto;}
+    .per-intro-txt{width: 100%;margin: 0 auto;padding: 3% 0;}
+    .per-intro-txt p{width:100%;margin: 0  auto;font-size: 14px;line-height: 18px;color: #666;display: block;font-weight: 300;}
+
+    .per-intro-form{width: 100%;margin: 0 auto;}
+    .per-form-li{width: 100%;margin:0 auto;overflow: hidden;position:relative;padding:6% 0;display: flex;align-items: center;justify-content: space-between;vertical-align: middle;}
+    .per-form-li:after{content:" ";position:absolute;left:0;bottom:0;width:100%;height:1px;border-bottom:1px solid #f5f5f5;color:#fff;-webkit-transform-origin:0 100%;transform-origin:0 100%;-webkit-transform:scaleY(.5);transform:scaleY(.5)}
+    .per-form-li:last-child:after{border-bottom:none}
+
+    .per-form-li .per-form-tit{width: 30%;font-size: 14px;color: #333;line-height: 18px;box-sizing: border-box;text-align:left;}
+    .per-form-li input{width: 100%;display: block;font-size: 14px;color: #000;line-height: 18px;height: 18px;outline: none;background: none;text-align: right;}
+
+    .per-form-textarea{flex:1;display: flex;flex-direction: column;}
+    .per-form-textarea textarea{width: 100%;display: block;font-size: 12px;color: #000;line-height: 20px;background: #f5f5f5;padding: 2% 3%;box-sizing: border-box;min-height: 80px;outline: none;margin-top: 3%;}
+
+
+    .per-intro-btn{width: 100%;margin: 0 auto;padding-top: 5%;}
+    .per-intro-btn button{width: 70%;margin: 0 auto;display: block;text-align: center;line-height: 40px;padding: 0;outline: none;border: none;font-size: 14px;background: #ad2231;color: #fff;border-radius: 100px;}
+
+    .fixed_btn{position: fixed;right: 0;bottom: 15%;width: 20%;background: #ad2231;border-radius: 50px 0 0 50px;}
+    .fixed_btn span{display: block;font-size: 14px;line-height: 32px;color: #fff;text-align: center;}
   </style>
 </head>
 
@@ -74,27 +105,34 @@
       </ul>
     </div>
     <div style="height: 55px"></div>
-    <div class="reward-tip" v-if="reward_tip" ref="reward_tip_div">
+    <div class="reward-tip" v-if="reward_tip" ref="reward_tip_div" style="overflow: hidden;">
       <span v-html="reward_tip" ref="reward_tip_span" :style="reward_tip_position"></span>
     </div>
     <div id="ranking_ph" class="ph_body" style="opacity: 0" :style="{opacity: appOpacity}">
       <ul >
-        <li v-if="myIndex != -1 && myIndex + 1 >= visibleCount">
+        <li>
           <div class="ph_num">{{myIndex+1}}</div>
           <div class="ph_con">
-            <div class="ph_tx"><img :src="logs[myIndex].headimgurl" /></div>
-            <div class="ph_name"><h2>{{logs[myIndex].nickname}}</h2></div>
-            <div class="ph_score"><span>{{logs[myIndex].scan_times}}</span></div>
+            <div class="ph_tx">
+              <img v-if="logs[myIndex].headimgurl" :src="logs[myIndex].headimgurl" />
+              <img v-else src="imgs/person.png" />
+            </div>
+            <div class="ph_name"><h2>{{logs[myIndex].nickname || '微信用户'}}（{{logs[myIndex].qr_id}}）</h2></div>
+            <div class="ph_score"><span>{{logs[myIndex].scan_times}}</span><i v-if="logs[myIndex].code" @click="giftToggle">兑换奖品</i></div>
           </div>
         </li>
         <li v-for="(log,index) in logs" :class="{cur: log.openid == openid}">
           <div class="ph_num" :title="index+1">
-            <img v-if="index < 3" :src="`imgs/rr${index+1}.png`"/>
-            <span v-else>{{index+1}}</span>
+<!--            <img v-if="index < 3" :src="`imgs/rr${index+1}.png`"/>-->
+<!--            <span v-else>{{index+1}}</span>-->
+            <span>{{index+1}}</span>
           </div>
           <div class="ph_con">
-            <div class="ph_tx"><img :src="log.headimgurl" /></div>
-            <div class="ph_name"><h2>{{log.nickname}}</h2></div>
+            <div class="ph_tx">
+              <img v-if="log.headimgurl" :src="log.headimgurl" />
+              <img v-else src="imgs/person.png" />
+            </div>
+            <div class="ph_name"><h2>{{log.nickname || '微信用户'}}</h2></div>
             <div class="ph_score"><span>{{log.scan_times}}</span></div>
           </div>
         </li>
@@ -104,25 +142,90 @@
         <a href="javascript:" title="关闭" @click="closeWin">关闭</a>
       </div>
       <div id="log" style="margin-top: 30px"></div>
-    </div>
-    <div class="alert" v-if="alertStr">
-      <div class="mask"></div>
-      <div class="content">
-        <div class="close" @click="alertStr = ''">&times;</div>
-        <span v-html="alertStr"></span>
+
+      <!-- 个人信息填写  暂时只给前9名显示-->
+      <div class="fixed_btn" @click="userInfoWin" v-if="is_collect_info == 1 && my_qr_id > 0 && myIndex <= 8"><span>填写信息</span></div>
+      <div class="per-intro-cover" v-if="show_info_win">
+        <div class="per-intro-body">
+          <div class="per-intro-tit">
+            <span>信息填写</span>
+            <img :src="`imgs/close.png`" @click="userInfoWin"/>
+          </div>
+          <div class="per-intro-ul">
+<!--            <div class="per-intro-txt">
+              <p>留下您的姓名与联系电话，中奖后将有工作人员联系您！</p>
+            </div>-->
+            <div class="per-intro-form">
+              <div class="per-form-li">
+                <div class="per-form-tit">姓名</div>
+                <input type="text" placeholder="请输入姓名" v-model="my_info.real_name" />
+              </div>
+              <div class="per-form-li">
+                <div class="per-form-tit">电话</div>
+                <input type="number" placeholder="请输入手机号" v-model="my_info.phone"/>
+              </div>
+              <div class="per-form-li" v-if="official_account_id == 42">
+                <div class="per-form-tit">邮寄地址</div>
+                <input type="text" placeholder="请输入邮寄地址" v-model="my_info.address"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="per-intro-btn" @click="confirm">
+            <button>确定</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 兑换码 -->
+      <div :class="show_gift_win==false?'gift-cover':'gift-cover show'">
+        <div class="gift-body">
+          <div class="gift-tit">
+            <h2>兑换奖品</h2>
+            <img @click="giftToggle" src="imgs/close.png"/>
+          </div>
+          <div class="gift-intro">
+            <div class="gift-intro-name">
+              <h2>{{logs[myIndex].prize_name}}</h2>
+              <p>{{this.reward_tip}}</p>
+            </div>
+            <div class="gift-intro-num">
+              <textarea id="textArea" readonly>{{logs[myIndex].code}}</textarea>
+              <input type="button" id="copyBtn" @click="copyText(1)" value="一键复制"/>
+            </div>
+          </div>
+
+          <wx-open-launch-weapp id="launch-btn" :username="meta_id" :path="mini_url" style="display: flex;justify-content: center;" @click="copyText">
+            <script type="text/wxtag-template">
+              <div class="gift-btn">
+                <button style="width: 80%;margin: 0 auto;display: block;text-align: center;line-height: 40px;padding: 0;outline: none;border: none;font-size: 14px;background: #ad2231;color: #fff;border-radius: 100px;">前往兑奖</button>
+              </div>
+            </script>
+          </wx-open-launch-weapp>
+        </div>
+      </div>
+
+      <div class="alert" v-if="alertStr">
+        <div class="mask"></div>
+        <div class="content">
+          <div class="close" @click="alertStr = ''">&times;</div>
+          <span v-html="alertStr"></span>
+        </div>
       </div>
     </div>
-    <div class="alert" v-if="isWx" style="z-index: 1001">
+    <!--<div class="alert" v-if="isWx" style="z-index: 1001">
       <div class="mask"></div>
       <div class="content" style="line-height: initial;height: auto;padding: 15px;">
         <span>如果页面没有显示内容，<br>请复制链接到浏览器中打开</span>
       </div>
-    </div>
+    </div>-->
   </div>
+
 <!-- <a id="return_back" href="#" title="返回">返回</a> -->
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+<script src="./js/jweixin.js"></script>
 <script>
 // 使用闭包，避免变量名和微信打开网页定义的发生冲突
 (function(window, undefined) {
@@ -169,7 +272,8 @@
 
   let IS_OFFLINE = location.origin !== ORIGIN
 
-  // 微信打开网页，logs已定义
+
+    // 微信打开网页，logs已定义
   const _debug = (m = '') => {
     document.getElementById('log').innerHTML = m
   }
@@ -203,6 +307,7 @@
         url,
         data: data,
         dataType: 'json',
+        method,
         success(res) {
           if (res && res.hasOwnProperty('no') && res.no == 1) {
             resolve(res)
@@ -220,6 +325,8 @@
   let params = parseUrlParams(location.search) || {}
   let openid = params.openid || ''
   let cannotCloseAlert = null
+
+  Vue.config.ignoredElements = ['wx-open-launch-weapp'];//注册wx-open-launch-weapp组件
 
   const app = new Vue({
     el: '#app',
@@ -239,7 +346,21 @@
         reward_tip: '',
         reward_scroll_interval: null,
         reward_watch_timeout: null,
-        reward_tip_position: {left: 0}
+        reward_tip_position: {left: 0},
+        help_num_text: '助力值',
+        is_collect_info: -1,
+
+        my_qr_id: 0,
+        show_info_win: false,  //显示填写信息弹窗
+        show_gift_win: false,  //显示兑奖码信息
+        my_info: {},  //个人信息
+
+        signPackage: [],
+
+        meta_id: '', // 小程序原始id
+        mini_url: '', // 小程序跳转页面
+
+        official_account_id: 0, // 公众号id
       }
     },
     watch: {
@@ -270,6 +391,22 @@
     },
     created() {
       const finished = () => {
+        wx.config({
+          debug: false,
+          appId: this.signPackage.appId,
+          timestamp: this.signPackage.timestamp,
+          nonceStr: this.signPackage.nonceStr,
+          signature: this.signPackage.signature,
+          jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+          ],
+          "openTagList":[
+            "wx-open-launch-weapp"
+          ]
+
+        });
         this.filterLogs()
         this.$nextTick(() => {
           this.showLoading = false
@@ -277,13 +414,46 @@
         })
       }
       this.showLoading = true
-      ajax('Official/Index/qr_activity_users')
+      function parseURL(url = location.href) {
+        let params = {}
+        let index = url.indexOf('?')
+        if (index !== -1) {
+          url.substr(index + 1).split('&').forEach(v => {
+            let [key, value] = v.split('=')
+            params[key] = decodeURIComponent(value.replace(/\#.*$/, ''))
+          })
+        }
+        return params
+      }
+      var data = parseURL();
+      ajax('Official/Index/qr_activity_users',{...data,url:location.href.split('#')[0]}, 'POST')
         .then(res => {
+          // console.log(res)
+          if (res.msg.is_no_auth) {
+            location.href=res.msg.url;
+            return;
+          }
+          if (res.msg.is_no_join==1){
+            alert('您还未参加活动哦~')
+            return;
+          }
+          if (res.msg.is_no_start==1){
+            alert('活动未开始~');
+            return;
+          }
           this.logs = res.msg.list || []
+          this.signPackage = res.msg.signPackage || []
           try {
             var activity = res.msg.activity || {};
-            document.title = `${activity.activity_name}排行榜`
-            this.reward_tip = activity.reward_tip || ''
+            var my_info = res.msg.my_info || {};
+            document.title = `${activity.activity_name}排行榜`;
+            this.reward_tip = activity.reward_tip || '';
+            this.is_collect_info = activity.is_collect_info;
+            this.meta_id = activity.meta_id;
+            this.mini_url = activity.mini_url;
+            this.my_qr_id = my_info.qr_id || 0;
+            this.my_info = my_info;
+            this.official_account_id = activity.official_account_id
           } catch (e) {
             document.title = '排行榜'
           }
@@ -328,7 +498,59 @@
           window.close()
           window.history.back()
         }
-      }
+      },
+
+      //点击填写信息
+      userInfoWin(){
+          this.show_info_win = !this.show_info_win;
+      },
+
+      //提交信息
+      confirm(){
+        let real_name = this.my_info.real_name.trim();
+        let phone = this.my_info.phone.trim();
+        let address = this.my_info.address;
+
+        if (!real_name || real_name==''){
+            alert('请先填写您的姓名');
+            return;
+        }
+        if (!phone || phone==''){
+            alert('请先填写您的联系方式');
+            return;
+        }
+        let para = {
+            real_name: real_name,
+            phone: phone,
+            address: address,
+            qr_id:this.my_qr_id,
+        };
+
+        $.post(`${ORIGIN}/index.php/Official/Index/save_qr_activity_users_info`,para,(data) => {
+            if(data.no == 1){
+                this.show_info_win = false;
+                alert('保存成功');
+            }else{
+                alert('请重新填写信息');
+            }
+        },'json');
+      },
+
+      //显示兑奖码弹窗
+      giftToggle(){
+        this.show_gift_win = !this.show_gift_win;
+      },
+
+      copyText(btn){
+        let textArea = document.getElementById('textArea')
+        // 选中文本
+        textArea.select()
+        // 复制
+        document.execCommand('copy')
+        if (btn === 1) {
+          alert('复制成功~');
+        }
+      },
     }
   })
 
